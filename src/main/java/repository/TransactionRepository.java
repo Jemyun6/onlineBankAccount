@@ -1,6 +1,7 @@
 package repository;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,14 @@ public class TransactionRepository {
 	
 	
 	@SuppressWarnings("unchecked")
+	// I really don't understand why is using "FileInputStream","ObjectInputStream" here
 	public void populateData() {
 		try (FileInputStream fileInputStream = new FileInputStream("transactions.txt");
 				 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);){
-			//this.transactions = (List<Transaction>) objectInputStream.readObject();
+			this.transactions = (List<Transaction>) objectInputStream.readObject();
 			
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (IOException | ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 
